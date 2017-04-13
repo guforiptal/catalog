@@ -20,4 +20,15 @@ security:
             http_basic: ~
             provider: our_db_provider
 
-    # ...
+    access_control:
+        - { path: ^/main, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/catalog, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/moder, roles: ROLE_MODER }
+        - { path: ^/restore, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    role_hierarchy:
+        ROLE_MODER: ROLE_USER
+        ROLE_ADMIN: ROLE_MODER
