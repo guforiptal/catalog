@@ -8,10 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-    * @Route("/admin")
-    */
-    public function adminAction()
+     * @Route("/", name="root")
+     */
+    public function rootAction()
     {
-        return new Response('<html><body>Admin page!</body></html>');
+        return $this->redirectToRoute('main');
+    }
+    /**
+    * @Route("/main", name="main")
+    */
+    public function mainAction()
+    {
+        return $this->render('main.html.twig');
     }
 }
