@@ -12,13 +12,16 @@ class DefaultController extends Controller
      */
     public function rootAction()
     {
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('login');
     }
     /**
     * @Route("/main", name="main")
     */
     public function mainAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('login');
+        }
         return $this->render('main.html.twig');
     }
 }
