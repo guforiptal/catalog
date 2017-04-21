@@ -22,8 +22,6 @@ class RegisterController extends Controller
         $form->handleRequest($request);
 
         $authenticationUtils = $this->get('security.authentication_utils');
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -49,7 +47,7 @@ class RegisterController extends Controller
 
         return $this->render('registration.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $form->getErrors(true),
             'form' => $form->createView(),
         ));
     }

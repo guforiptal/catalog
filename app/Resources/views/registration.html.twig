@@ -54,9 +54,9 @@
                 </div>
                 {{ form_row(form._token) }}
             </form>
-            {% if error %}
+            {% if error != "" %}
                 <div class="alert alert-danger" role="alert">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    {{ error }}
                 </div>
             {% endif %}
         </div>
