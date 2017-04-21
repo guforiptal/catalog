@@ -27,21 +27,24 @@
             <div class="form-login">
                 <h4>Welcome back.</h4>
                 <form id="login-form" action="{{ path('login') }}" method="post" role="form">
-                <input type="text" name="_username" id="username" tabindex="1" class="form-control input-sm chat-input" placeholder="Username" value="{{ last_username }}">
-                </br>
-                <input type="password" name="_password" id="password" tabindex="2" class="form-control input-sm chat-input" placeholder="Password">
-                </br>
-                <div class="wrapper">
+                    <input type="text" name="_username" id="username" tabindex="1"
+                           class="form-control input-sm chat-input" placeholder="Username" value="{{ last_username }}">
+                    </br>
+                    <input type="password" name="_password" id="password" tabindex="2"
+                           class="form-control input-sm chat-input" placeholder="Password">
+                    </br>
+                    <div class="wrapper">
 	            <span class="group-btn">
-                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="btn btn-primary btn-md" value="Log In">
+                    <input type="submit" name="login-submit" id="login-submit" tabindex="4"
+                           class="btn btn-primary btn-md" value="Log In">
 	            </span>
-                </div>
-                <p></p>
-                <div class="wrapper">
-                    <a href="#">Forgot password?</a> or <a href="{{ path('registration') }}">Not registered?</a>
-                </div>
-                    <input type="hidden" name="_target_path" value="main" />
-                    <input type="hidden" name="_failure_path" value="login" />
+                    </div>
+                    <p></p>
+                    <div class="wrapper">
+                        <a href="#">Forgot password?</a> or <a href="{{ path('registration') }}">Not registered?</a>
+                    </div>
+                    <input type="hidden" name="_target_path" value="main"/>
+                    <input type="hidden" name="_failure_path" value="login"/>
                 </form>
                 {% if error %}
                     <div class="alert alert-danger" role="alert">

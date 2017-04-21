@@ -12,8 +12,9 @@ class DefaultController extends Controller
      */
     public function rootAction()
     {
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('main');
     }
+
     /**
     * @Route("/main", name="main")
     */
@@ -23,5 +24,13 @@ class DefaultController extends Controller
             return $this->redirectToRoute('login');
         }
         return $this->render('main.html.twig');
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registeRedirect()
+    {
+        return $this->redirectToRoute('registration');
     }
 }
