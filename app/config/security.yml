@@ -1,18 +1,12 @@
 # app/config/security.yml
 security:
     encoders:
-        AppBundle\Entity\User:
-            algorithm: bcrypt
-
+        FOS\UserBundle\Model\UserInterface: bcrypt
     # ...
 
     providers:
-        our_db_provider:
-            entity:
-                class: AppBundle:User
-                property: username
-                # if you're using multiple entity managers
-                # manager_name: customer
+        fos_userbundle:
+              id: fos_user.user_provider.username
 
     firewalls:
         main:
@@ -21,7 +15,7 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: main
-            provider: our_db_provider
+            provider: fos_userbundle
             logout:
                 path:   /logout
                 target: /main

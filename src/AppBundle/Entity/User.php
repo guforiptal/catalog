@@ -8,7 +8,7 @@
 
 namespace AppBundle\Entity;
 
-
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -20,52 +20,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User extends BaseUser
 {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
+    protected $id;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
-    private $plainPassword;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     * @ORM\Column(type="string", length=60, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $role;
+    protected $plainPassword;
 
     public function __construct()
     {
-        $this->isActive = true;
+        parent::__construct();
+        $this->enabled = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
     }
@@ -94,7 +67,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array($this->role);
+        return array($this->roles);
     }
 
     public function getEmail()
@@ -124,7 +97,7 @@ class User implements UserInterface
 
     public function setRoleUser()
     {
-        $this->role = "ROLE_USER";
+        $this->roles = "ROLE_USER";
     }
 
     public function eraseCredentials()
