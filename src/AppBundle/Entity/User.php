@@ -39,65 +39,19 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->enabled = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
     }
 
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
         return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    public function getRoles()
-    {
-        return array($this->roles);
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-    }
-
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
     }
 
     public function setRoleUser()
     {
-        $this->roles = "ROLE_USER";
+        $this->addRole("ROLE_USER");
+        if ($this->username == "admin"){
+            $this->addRole("ROLE_ADMIN");
+        }
     }
 
     public function eraseCredentials()

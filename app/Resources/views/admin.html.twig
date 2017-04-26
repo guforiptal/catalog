@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>User control grid (admins only)</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/ui.jqgrid.css') }}"/>
+
+    <script src="{{ asset('js/jquery-1.11.0.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/i18n/grid.locale-en.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery.jqGrid.js') }}" type="text/javascript"></script>
+
+</head>
+<body>
+<table id="grid"></table>
+<div id="pager"></div>
+<script type="text/javascript">
+    $("#grid").jqGrid({
+        url: "{{ path('users') }}",
+        datatype: "xml",
+        mtype: "GET",
+        colNames: ["Id", "Username", "Password", "E-mail", "Username canonical", "E-mail canonical",
+            "Enabled", "Salt", "Last login", "Confirmation token", "Password requested at", "Roles"],
+        colModel: [
+            {name: "id"},
+            {name: "username"},
+            {name: "password"},
+            {name: "email"},
+            {name: "usernameCanonical"},
+            {name: "emailCanonical"},
+            {name: "enabled"},
+            {name: "salt"},
+            {name: "lastLogin"},
+            {name: "confirmationToken"},
+            {name: "passwordRequestedAt"},
+            {name: "roles"}
+        ],
+        pager: "#pager",
+        rowNum: 10,
+        rowList: [10, 20, 30],
+        sortname: "id",
+        sortorder: "desc",
+        viewrecords: true,
+        gridview: true,
+        autoencode: true,
+        caption: "User control grid",
+        height: 'auto'
+    });
+</script>
+</body>
+</html>
