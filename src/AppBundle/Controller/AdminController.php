@@ -27,12 +27,12 @@ class AdminController extends Controller
     /**
      * @Route("/admin/users", name="users")
      */
-    public function usersAction()
+    public function usersActionShow()
     {
-        $page = $_GET['page'];
-        $limit = $_GET['rows'];
-        $sidx = $_GET['sidx'];
-        $sord = $_GET['sord'];
+        $page = $_POST['page'];
+        $limit = $_POST['rows'];
+        $sidx = $_POST['sidx'];
+        $sord = $_POST['sord'];
         if (!$sidx) $sidx = 1;
 
         $start = $limit * $page - $limit;
@@ -79,7 +79,7 @@ class AdminController extends Controller
             if($user->getLastLogin() != null)  $s .= "<cell>" . $user->getLastLogin()->format('Y-m-d H:i:s') . "</cell>";
             else $s .= "<cell>" . 'N/A' . "</cell>";
             $s .= "<cell>" . $user->getConfirmationToken() . "</cell>";
-            if($user->getPasswordRequestedAt() != null)   $s .= "<cell>" . $user->getPasswordRequestedAt()->format('Y-m-d H:i:s')->toString() . "</cell>";
+            if($user->getPasswordRequestedAt() != null)   $s .= "<cell>" . $user->getPasswordRequestedAt()->format('Y-m-d H:i:s') . "</cell>";
             else $s .= "<cell>" . 'N/A' . "</cell>";
             $roles = "";
             foreach ($user->getRoles() as $str){
@@ -107,5 +107,30 @@ class AdminController extends Controller
                 return 'passwordRequestedAt';
         }
         return $str;
+    }
+
+    /**
+     * @Route("/admin/users/edit", name="users_edit")
+     */
+    public function usersActionEdit()
+    {
+        $id = $_POST['id'];
+        $username = $_POST['username'];
+
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
+        $user = $repository->findOneById($id);
+        $user->setUsername($username);
+        $user->setUsernameCanonical($username);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $s = "";
+        foreach($_POST as $key=>$value){
+            $s .= $key.' '.$value."\n";
+        }
+
+        return new Response();
     }
 }
