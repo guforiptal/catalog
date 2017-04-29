@@ -25,7 +25,7 @@
             "Enabled", "Salt", "Last login", "Confirmation token", "Password requested at", "Roles"],
         colModel: [
             {name: "id"},
-            {name: "username"},
+            {name: "username", editable: true, edittype: 'text', editrules:{required:true}},
             {name: "password"},
             {name: "email"},
             {name: "usernameCanonical"},
