@@ -20,7 +20,7 @@
     $("#grid").jqGrid({
         url: "{{ path('users') }}",
         datatype: "xml",
-        mtype: "GET",
+        mtype: "POST",
         colNames: ["Id", "Username", "Password", "E-mail", "Username canonical", "E-mail canonical",
             "Enabled", "Salt", "Last login", "Confirmation token", "Password requested at", "Roles"],
         colModel: [
@@ -46,7 +46,10 @@
         gridview: true,
         autoencode: true,
         caption: "User control grid",
-        height: 'auto'
+        height: 'auto',
+        cellEdit: true,
+        cellsubmit: 'remote',
+        cellurl: "{{ path('users_edit') }}"
     });
 </script>
 </body>
