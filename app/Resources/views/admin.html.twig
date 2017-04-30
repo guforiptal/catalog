@@ -21,21 +21,21 @@
         url: "{{ path('users') }}",
         datatype: "xml",
         mtype: "POST",
-        colNames: ["Id", "Username", "Password", "E-mail", "Username canonical", "E-mail canonical",
+        colNames: ["Id", "Username","Password","E-mail","Username canonical","E-mail canonical",
             "Enabled", "Salt", "Last login", "Confirmation token", "Password requested at", "Roles"],
         colModel: [
-            {name: "id"},
+            {name: "id", editable: true, edittype: 'text', editrules:{required:true}, stype:"int", sopt:'gt'},
             {name: "username", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "password"},
-            {name: "email"},
-            {name: "usernameCanonical"},
-            {name: "emailCanonical"},
-            {name: "enabled"},
-            {name: "salt"},
-            {name: "lastLogin"},
-            {name: "confirmationToken"},
-            {name: "passwordRequestedAt"},
-            {name: "roles"}
+            {name: "password", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "email", editable: true, edittype: 'email', editrules:{required:true}},
+            {name: "usernameCanonical", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "emailCanonical", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "enabled", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "salt", editable: true, edittype: 'text', editrules:{required:false}},
+            {name: "lastLogin", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "confirmationToken", editable: true, edittype: 'text', editrules:{required:false}},
+            {name: "passwordRequestedAt", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "roles", editable: true, edittype: 'text', editrules:{required:true}}
         ],
         pager: "#pager",
         rowNum: 10,
@@ -51,6 +51,8 @@
         cellsubmit: 'remote',
         cellurl: "{{ path('users_edit') }}"
     });
+    jQuery("#grid").jqGrid('filterToolbar');
+    jQuery("#grid").remapColumns([0,1,4,2,3,5,6,7,8,9,10,11],true,false);
 </script>
 </body>
 </html>
