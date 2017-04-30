@@ -54,6 +54,37 @@ class User extends BaseUser
         }
     }
 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        $this->usernameCanonical = $username;
+
+        return $this;
+    }
+
+    public function setUsernameCanonical($usernameCanonical)
+    {
+        $this->usernameCanonical = $usernameCanonical;
+        $this->username = $usernameCanonical;
+
+        return $this;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        $this->emailCanonical = $email;
+        return $this;
+    }
+
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->emailCanonical = $emailCanonical;
+        $this->email = $emailCanonical;
+        return $this;
+    }
+
+
     public function eraseCredentials()
     {
     }
