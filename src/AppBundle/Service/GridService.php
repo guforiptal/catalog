@@ -99,7 +99,28 @@ class GridService
 
     private function editGrid()
     {
+        $id = $this->post['id'];
+        $column_name = $this->getColumnName();
+        $value = $this->post[$column_name];
 
+        //file_put_contents("php://stdout", "\nDump:");
+        //$this->printArray(array_keys($_POST));
+
+        $repository = $this->em->getRepository($this->bundle_name);
+        $user = $repository->findOneById($id);
+
+        $setter_name = 'set'.ucfirst($this->caseCorrector($column_name));
+        $user->$setter_name($value);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return;
+    }
+
+    private function getColumnName()
+    {
+        return array_keys($_POST)[0];
     }
 
     private function caseCorrector($str)
