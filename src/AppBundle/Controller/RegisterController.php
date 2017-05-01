@@ -14,6 +14,9 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request)
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('catalog');
+        }
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -50,5 +53,15 @@ class RegisterController extends Controller
             'error' => $form->getErrors(true),
             'form' => $form->createView(),
         ));
+
+
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registeRedirect()
+    {
+        return $this->redirectToRoute('registration');
     }
 }

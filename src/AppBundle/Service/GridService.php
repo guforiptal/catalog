@@ -97,7 +97,7 @@ class GridService
         return $s;
     }
 
-    private function editGrid()
+    public function editGrid()
     {
         $id = $this->post['id'];
         $column_name = $this->getColumnName();

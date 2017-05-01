@@ -10,3 +10,12 @@ services:
     app.grid_service:
         class:     AppBundle\Service\GridService
         arguments: ['@doctrine.orm.entity_manager']
+
+    category_view:
+        class: AppBundle\Service\CategoryToView
+
+    items_on_category_view:
+        class: AppBundle\Service\ItemsOnCategoryToView
+
+    item_view:
+        class: AppBundle\Service\ItemToView

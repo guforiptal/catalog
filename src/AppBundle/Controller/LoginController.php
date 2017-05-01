@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function loginAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('catalog');
         }
 
         $authenticationUtils = $this->get('security.authentication_utils');

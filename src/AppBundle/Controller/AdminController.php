@@ -31,10 +31,8 @@ class AdminController extends Controller
      */
     public function usersActionShow()
     {
-        $grid_service = $this->container->get('app.grid_service');
-        $grid_service->setBundleName('AppBundle:User');
-        $grid_service->setPost($_POST);
-        $response = $grid_service->getGrid();
+        $grid = $this->gridInit('AppBundle:User', $_POST);
+        $response = $grid->getGrid();
 
         header("Content-type: text/xml;charset=utf-8");
         return new Response($response);
@@ -45,10 +43,8 @@ class AdminController extends Controller
      */
     public function usersActionEdit()
     {
-        $grid_service = $this->container->get('app.grid_service');
-        $grid_service->setBundleName('AppBundle:User');
-        $grid_service->setPost($_POST);
-
+        $grid = $this->gridInit('AppBundle:User', $_POST);
+        $grid->editGrid();
 
         return new Response();
     }
@@ -83,5 +79,13 @@ class AdminController extends Controller
                 return 'passwordRequestedAt';
         }
         return $str;
+    }
+
+    private function gridInit($bundle_name,$post)
+    {
+        $grid_service = $this->container->get('app.grid_service');
+        $grid_service->setBundleName($bundle_name);
+        $grid_service->setPost($post);
+        return $grid_service;
     }
 }

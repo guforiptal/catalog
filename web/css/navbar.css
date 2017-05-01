@@ -6,6 +6,9 @@ display: block!important;
 float: left !important;
 }
 
+.navbar{
+    margin-bottom: 0px;
+}
 
 .navbar-nav.navbar-right:last-child {
 margin-right: -15px !important;
@@ -14,3 +17,4 @@ margin-right: -15px !important;
 .navbar-right {
 float: right!important;
 }
+

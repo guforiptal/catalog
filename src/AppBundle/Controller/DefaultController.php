@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,21 +17,56 @@ class DefaultController extends Controller
     }
 
     /**
-    * @Route("/main", name="main")
-    */
-    public function mainAction()
+     * @Route("/catalog", name="catalog")
+     */
+    public function catalogAction()
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('main');
         }
-        return $this->render('main.html.twig');
+
+        $categories = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findAll();
+
+        $items = $this->getDoctrine()
+            ->getRepository('AppBundle:Item')
+            ->findAll();
+
+        $category_view = $this->container->get('category_view');
+        $items_view = $this->container->get('items_on_category_view');
+
+
+        return $this->render('catalog.html.twig', array(
+            'categories' => $category_view->getViewString($categories),
+            'items' =>$items_view->getViewString($items),
+        ));
     }
 
+
     /**
-     * @Route("/register", name="register")
+     * @Route("/catalog/category/{category}", name="category")
      */
-    public function registeRedirect()
+    public function categoryAction($category)
     {
-        return $this->redirectToRoute('registration');
+        $categories = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findAll();
+
+        $items = $this->getDoctrine()
+            ->getRepository('AppBundle:Item')
+            ->findByCategory($category);
+
+
+        $category_view = $this->container->get('category_view');
+        $items_view = $this->container->get('items_on_category_view');
+        //$paginator = $this->get('knp_paginator');
+
+
+        return $this->render('catalog.html.twig', array(
+            'categories' => $category_view->getViewString($categories),
+            'items' =>$items_view->getViewString($items),
+        ));
     }
+
 }

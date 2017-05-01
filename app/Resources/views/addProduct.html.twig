@@ -1,0 +1,40 @@
+
+
+
+{% include "header.html.twig" %}
+
+<div class="container-fluid">
+    <div class="row jumbotron">
+        <form action="" class="form-horizontal">
+            <legend>Create a new item.</legend>
+            <div class="col-xs-12 col-sm-5">
+                <div class="form-group">
+
+                    <label for="itemName">Item name</label>
+                    <input id="itemName" type="text" class="form-control" placeholder="Type name here">
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-offset-2 col-sm-5">
+                <div class="form-group">
+                    <label for="itemCategory">Item category</label>
+                    <input id="itemCategory" type="text" class="form-control" placeholder="Type id of category here">
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="itemDescription">Item description</label>
+                    <textarea id="itemDescription" class="form-control" rows="3" placeholder="Type description here"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-lg btn-block">Create product</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% include "footer.html.twig" %}
+

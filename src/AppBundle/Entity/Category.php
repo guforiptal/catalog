@@ -28,6 +28,12 @@ class Category
      */
     private $name;
 
+    /**
+     * @var int
+     * @ORM\Column(name="parent", type="integer")
+     */
+    private $parent;
+
 
     /**
      * Get id
@@ -61,6 +67,31 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param string $parent
+     *
+     * @return Category
+     */
+
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return int
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
 
