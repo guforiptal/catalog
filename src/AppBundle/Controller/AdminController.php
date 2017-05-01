@@ -45,22 +45,10 @@ class AdminController extends Controller
      */
     public function usersActionEdit()
     {
-        $id = $_POST['id'];
-        $column_name = $this->getColumnName();
-        $value = $_POST[$column_name];
+        $grid_service = $this->container->get('app.grid_service');
+        $grid_service->setBundleName('AppBundle:User');
+        $grid_service->setPost($_POST);
 
-        //file_put_contents("php://stdout", "\nDump:");
-        //$this->printArray(array_keys($_POST));
-
-        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
-        $user = $repository->findOneById($id);
-
-        $setter_name = 'set'.ucfirst($this->caseCorrector($column_name));
-        $user->$setter_name($value);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
 
         return new Response();
     }
