@@ -31,67 +31,13 @@ class AdminController extends Controller
      */
     public function usersActionShow()
     {
-        $page = $_POST['page'];
-        $limit = $_POST['rows'];
-        $sidx = $_POST['sidx'];
-        $sord = $_POST['sord'];
-        if (!$sidx) $sidx = 1;
-
-        $start = $limit * $page - $limit;
-        if ($start < 0) $start = 0;
-
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT u
-    FROM AppBundle:User u
-    ORDER BY u.' . $this->caseCorrector($sidx) . ' ' . strtoupper($sord)
-        )->setFirstResult($start)->setMaxResults($limit);
-
-        $count = $em->createQuery(
-            'SELECT COUNT(u)
-    FROM AppBundle:User u'
-        )->getSingleScalarResult();
-
-        if ($count > 0 && $limit > 0) {
-            $total_pages = ceil($count / $limit);
-        } else {
-            $total_pages = 0;
-        }
+        $grid_service = $this->container->get('app.grid_service');
+        $grid_service->setBundleName('AppBundle:User');
+        $grid_service->setPost($_POST);
+        $response = $grid_service->getGrid();
 
         header("Content-type: text/xml;charset=utf-8");
-
-        $s = "<?xml version='1.0' encoding='utf-8'?>";
-        $s .= "<rows>";
-        $s .= "<page>" . $page . "</page>";
-        $s .= "<total>" . $total_pages . "</total>";
-        $s .= "<records>" . $count . "</records>";
-
-        $paginator = new Paginator($query, $fetchJoinCollection = true);
-
-        foreach ($paginator as $user) {
-            $s .= "<row id='" . $user->getId() . "'>";
-            $s .= "<cell>" . $user->getId() . "</cell>";
-            $s .= "<cell>" . $user->getUsername() . "</cell>";
-            $s .= "<cell>" . $user->getPassword() . "</cell>";
-            $s .= "<cell>" . $user->getEmail() . "</cell>";
-            $s .= "<cell>" . $user->getUsernameCanonical() . "</cell>";
-            $s .= "<cell>" . $user->getEmailCanonical() . "</cell>";
-            $s .= "<cell>" . $user->isEnabled() . "</cell>";
-            $s .= "<cell>" . $user->getSalt() . "</cell>";
-            if ($user->getLastLogin() != null) $s .= "<cell>" . $user->getLastLogin()->format('Y-m-d H:i:s') . "</cell>";
-            else $s .= "<cell>" . 'N/A' . "</cell>";
-            $s .= "<cell>" . $user->getConfirmationToken() . "</cell>";
-            if ($user->getPasswordRequestedAt() != null) $s .= "<cell>" . $user->getPasswordRequestedAt()->format('Y-m-d H:i:s') . "</cell>";
-            else $s .= "<cell>" . 'N/A' . "</cell>";
-            $roles = "";
-            foreach ($user->getRoles() as $str) {
-                $roles .= $str . ' ';
-            }
-            $s .= "<cell>" . $roles . "</cell>";
-            $s .= "</row>";
-        }
-        $s .= "</rows>";
-        return new Response($s);
+        return new Response($response);
     }
 
     /**
