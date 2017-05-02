@@ -18,24 +18,18 @@
 <div id="pager"></div>
 <script type="text/javascript">
     $("#grid").jqGrid({
-        url: "{{ path('users') }}",
+        url: "{{ path('items') }}",
         datatype: "xml",
         mtype: "POST",
-        colNames: ["Id", "Username","Password","E-mail","Username canonical","E-mail canonical",
-            "Enabled", "Salt", "Last login", "Confirmation token", "Password requested at", "Roles"],
+        colNames: ["Id", "Name","Active","Description","Image","Category", "SKU"],
         colModel: [
             {name: "id", editable: true, edittype: 'text', editrules:{required:true}, stype:"int", sopt:'gt'},
-            {name: "username", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "password", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "email", editable: true, edittype: 'email', editrules:{required:true}},
-            {name: "usernameCanonical", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "emailCanonical", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "enabled", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "salt", editable: true, edittype: 'text', editrules:{required:false}},
-            {name: "lastLogin", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "confirmationToken", editable: true, edittype: 'text', editrules:{required:false}},
-            {name: "passwordRequestedAt", editable: true, edittype: 'text', editrules:{required:true}},
-            {name: "roles", editable: true, edittype: 'text', editrules:{required:true}}
+            {name: "name", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "active", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "description", editable: true, edittype: 'email', editrules:{required:true}},
+            {name: "image", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "category", editable: true, edittype: 'text', editrules:{required:true}},
+            {name: "sku", editable: true, edittype: 'text', editrules:{required:true}}
         ],
         pager: "#pager",
         rowNum: 10,
@@ -49,7 +43,7 @@
         height: 'auto',
         cellEdit: true,
         cellsubmit: 'remote',
-        cellurl: "{{ path('users_edit') }}"
+        cellurl: "{{ path('items_edit') }}"
     });
     jQuery("#grid").jqGrid('filterToolbar');
     jQuery("#grid").remapColumns([0,1,4,2,3,5,6,7,8,9,10,11],true,false);

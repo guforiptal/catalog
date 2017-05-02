@@ -11,9 +11,6 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use AppBundle\Entity\User;
-use Symfony\Component\Debug\Debug;
 
 
 class AdminController extends Controller
@@ -49,11 +46,6 @@ class AdminController extends Controller
         return new Response();
     }
 
-    private function getColumnName()
-    {
-        return array_keys($_POST)[0];
-    }
-
     private function printArray($array)
     {
         foreach ($array as $key => $value) {
@@ -62,23 +54,6 @@ class AdminController extends Controller
                 $this->printArray($value);
             }
         }
-    }
-
-    private function caseCorrector($str)
-    {
-        switch($str){
-            case('usernamecanonical'):
-                return 'usernameCanonical';
-            case('emailcanonical'):
-                return 'emailCanonical';
-            case('lastlogin'):
-                return 'lastLogin';
-            case('confirmationtoken'):
-                return 'confirmationToken';
-            case('passwordrequestedat'):
-                return 'passwordRequestedAt';
-        }
-        return $str;
     }
 
     private function gridInit($bundle_name,$post)

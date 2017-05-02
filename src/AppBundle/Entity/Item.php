@@ -61,6 +61,10 @@ class Item
      */
     private $sku;
 
+    public function __construct()
+    {
+        $this->active = true;
+    }
 
     /**
      * Get id
@@ -82,8 +86,6 @@ class Item
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -107,8 +109,6 @@ class Item
     public function setCategory($category)
     {
         $this->category = $category;
-
-        return $this;
     }
 
     /**
@@ -132,8 +132,6 @@ class Item
     public function setDescription($description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
     /**
@@ -157,8 +155,6 @@ class Item
     public function setImage($image)
     {
         $this->image = $image;
-
-        return $this;
     }
 
     /**
@@ -182,8 +178,6 @@ class Item
     public function setSku($sku)
     {
         $this->sku = $sku;
-
-        return $this;
     }
 
     /**
@@ -207,8 +201,6 @@ class Item
     public function setActive($active)
     {
         $this->sku = $active;
-
-        return $this;
     }
 
     /**
