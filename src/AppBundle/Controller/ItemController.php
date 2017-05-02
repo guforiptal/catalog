@@ -19,20 +19,24 @@ class ItemController extends Controller
     {
         $item = $this->getDoctrine()
             ->getRepository('AppBundle:Item')
-            ->findById($id);
+            ->findOneById($id);
 
         $categories = $this->getDoctrine()
             ->getRepository('AppBundle:Category')
             ->findAll();
 
-        $item_view = $this->container->get('item_view');
-        $category_view = $this->container->get('category_view');
+        $current_category = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findOneById($item->getCategory());
 
-        $item = $item_view->itemToArray($item);
+        $category_view = $this->container->get('category_view');
+        $receiving_breadcrumbs = $this->container->get('receiving_breadcrumbs');
+
 
         return $this->render('product.html.twig', array(
             'item'=>$item,
             'categories' => $category_view->getViewString($categories),
+            'breadcrumbs' => $receiving_breadcrumbs->getViewString($current_category, $categories, ''),
         ));
     }
 

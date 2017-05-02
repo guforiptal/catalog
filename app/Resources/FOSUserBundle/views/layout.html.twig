@@ -6,7 +6,7 @@
     <body>
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <h2 style="text-align: center">You're all ready loggined, do you rly wan't to reset your password?</h2>
+               <!-- <h2 style="text-align: center">You're all ready loggined, do you rly wan't to reset your password?</h2> -->
             {% else %}
             <!--    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a> -->
             {% endif %}

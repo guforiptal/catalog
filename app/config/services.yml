@@ -19,3 +19,6 @@ services:
 
     item_view:
         class: AppBundle\Service\ItemToView
+
+    receiving_breadcrumbs:
+        class: AppBundle\Service\ReceivingBreadcrumbs

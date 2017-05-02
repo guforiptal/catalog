@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Category;
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
 
 class AddCategoryController extends Controller
 {
@@ -29,9 +29,10 @@ class AddCategoryController extends Controller
         $item = new Category();
 
         $form = $this->createFormBuilder($item)
-            ->add('name', TextType::class)
-            ->add('parent', IntegerType::class)
-            ->add('save', SubmitType::class, array('label' => 'Add category'))
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('parent', IntegerType::class, array('attr' => array('class' => 'form-control')))
+            ->add('save', SubmitType::class, array('label' => 'Add category',
+                'attr' => array('class' => 'btn btn-default btn-block')))
             ->getForm();
 
         $form->handleRequest($request);

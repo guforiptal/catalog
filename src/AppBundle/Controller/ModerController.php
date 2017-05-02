@@ -5,14 +5,10 @@
  * Date: 01.05.2017
  * Time: 22:48
  */
-
 namespace AppBundle\Controller;
-
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
 class ModerController extends Controller
 {
     /**
@@ -22,7 +18,6 @@ class ModerController extends Controller
     {
         return $this->render('moder.html.twig');
     }
-
     /**
      * @Route("/moder/items", name="items")
      */
@@ -30,11 +25,9 @@ class ModerController extends Controller
     {
         $grid = $this->gridInit('AppBundle:Item', $_POST);
         $response = $grid->getGrid();
-
         header("Content-type: text/xml;charset=utf-8");
         return new Response($response);
     }
-
     /**
      * @Route("/moder/items/edit", name="items_edit")
      */
@@ -42,10 +35,8 @@ class ModerController extends Controller
     {
         $grid = $this->gridInit('AppBundle:Item', $_POST);
         $grid->editGrid();
-
         return new Response();
     }
-
     private function gridInit($bundle_name,$post)
     {
         $grid_service = $this->container->get('app.grid_service');
@@ -53,5 +44,4 @@ class ModerController extends Controller
         $grid_service->setPost($post);
         return $grid_service;
     }
-
 }

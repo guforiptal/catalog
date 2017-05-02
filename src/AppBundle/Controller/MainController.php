@@ -25,6 +25,14 @@ class MainController extends Controller
             return $this->redirectToRoute('catalog');
         }
 
-        return $this->render('main.html.twig');
+        $items = $this->getDoctrine()
+            ->getRepository('AppBundle:Item')
+            ->findAll();
+
+        return $this->render('main.html.twig', array(
+            'image1' => $items['1']->getImage(),
+            'image2' => $items['2']->getImage(),
+            'image3' => $items['3']->getImage(),
+        ));
     }
 }

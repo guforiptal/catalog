@@ -30,12 +30,14 @@ class AddProductController extends Controller
         $item = new Item();
 
         $form = $this->createFormBuilder($item)
-            ->add('name', TextType::class)
-            ->add('description', TextType::class)
-            ->add('image', UrlType::class)
-            ->add('category', IntegerType::class)
-            ->add('sku', IntegerType::class)
-            ->add('save', SubmitType::class, array('label' => 'Add item'))
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('description', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('image', UrlType::class, array('attr' => array('class' => 'form-control')))
+            ->add('category', IntegerType::class, array('attr' => array('class' => 'form-control')))
+            ->add('sku', IntegerType::class, array('attr' => array('class' => 'form-control')))
+            ->add('save', SubmitType::class, array('label' => 'Add item',
+                                                    'attr' => array('class' => 'btn btn-default btn-block')
+            ))
             ->getForm();
 
         $form->handleRequest($request);
@@ -54,5 +56,4 @@ class AddProductController extends Controller
             'form' => $form->createView(),
         ));
     }
-
 }

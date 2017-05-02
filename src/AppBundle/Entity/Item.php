@@ -1,9 +1,6 @@
 <?php
-
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Item
  *
@@ -20,52 +17,41 @@ class Item
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
-
     /**
      * @var boolean
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
-
-
     /**
      * @var string
      * @ORM\Column(name="description", type="string", length=255, unique=true)
      */
     private $description;
-
     /**
      * @var string
      * @ORM\Column(name="image", type="string", length=255, unique=true)
      */
-
     private $image;
-
-
     /**
      * @var int
      * @ORM\Column(name="category", type="integer")
      */
     private $category;
-
     /**
      * @var int
      * @ORM\Column(name="sku", type="integer")
      */
     private $sku;
-
     public function __construct()
     {
         $this->active = true;
     }
-
     /**
      * Get id
      *
@@ -75,7 +61,6 @@ class Item
     {
         return $this->id;
     }
-
     /**
      * Set name
      *
@@ -85,7 +70,6 @@ class Item
     {
         $this->name = $name;
     }
-
     /**
      * Get name
      *
@@ -95,18 +79,15 @@ class Item
     {
         return $this->name;
     }
-
     /**
      * Set category
      *
      * @param int $category
      */
-
     public function setCategory($category)
     {
         $this->category = $category;
     }
-
     /**
      * Get item
      *
@@ -116,18 +97,15 @@ class Item
     {
         return $this->category;
     }
-
     /**
      * Set description
      *
      * @param string $description
      */
-
     public function setDescription($description)
     {
         $this->description = $description;
     }
-
     /**
      * Get item
      *
@@ -137,18 +115,15 @@ class Item
     {
         return $this->description;
     }
-
     /**
      * Set image
      *
      * @param string $image
      */
-
     public function setImage($image)
     {
         $this->image = $image;
     }
-
     /**
      * Get image
      *
@@ -158,18 +133,15 @@ class Item
     {
         return $this->image;
     }
-
     /**
      * Set sku
      *
      * @param int $sku
      */
-
     public function setSku($sku)
     {
         $this->sku = $sku;
     }
-
     /**
      * Get sku
      *
@@ -179,18 +151,15 @@ class Item
     {
         return $this->sku;
     }
-
     /**
      * Set active
      *
      * @param boolean $active
      */
-
     public function setActive($active)
     {
         $this->sku = $active;
     }
-
     /**
      * Get active
      *
@@ -200,11 +169,9 @@ class Item
     {
         return $this->active;
     }
-
     public function getGetters()
     {
         $array = array();
-
         array_push($array,'getId');
         array_push($array,'getName');
         array_push($array,'getActive');
@@ -212,10 +179,6 @@ class Item
         array_push($array,'getImage');
         array_push($array,'getCategory');
         array_push($array,'getSku');
-
         return $array;
     }
-
-
 }
-

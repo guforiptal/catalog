@@ -5,14 +5,10 @@
  * Date: 26.04.2017
  * Time: 12:24
  */
-
 namespace AppBundle\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
-
 class AdminController extends Controller
 {
     /**
@@ -22,7 +18,6 @@ class AdminController extends Controller
     {
         return $this->render('admin.html.twig');
     }
-
     /**
      * @Route("/admin/users", name="users")
      */
@@ -30,11 +25,9 @@ class AdminController extends Controller
     {
         $grid = $this->gridInit('AppBundle:User', $_POST);
         $response = $grid->getGrid();
-
         header("Content-type: text/xml;charset=utf-8");
         return new Response($response);
     }
-
     /**
      * @Route("/admin/users/edit", name="users_edit")
      */
@@ -42,10 +35,8 @@ class AdminController extends Controller
     {
         $grid = $this->gridInit('AppBundle:User', $_POST);
         $grid->editGrid();
-
         return new Response();
     }
-
     private function gridInit($bundle_name,$post)
     {
         $grid_service = $this->container->get('app.grid_service');

@@ -40,6 +40,7 @@ class DefaultController extends Controller
         return $this->render('catalog.html.twig', array(
             'categories' => $category_view->getViewString($categories),
             'items' =>$items_view->getViewString($items),
+            'breadcrumbs' => '',
         ));
     }
 
@@ -57,15 +58,20 @@ class DefaultController extends Controller
             ->getRepository('AppBundle:Item')
             ->findByCategory($category);
 
+        $current_category = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findOneById($category);
+
 
         $category_view = $this->container->get('category_view');
         $items_view = $this->container->get('items_on_category_view');
-        //$paginator = $this->get('knp_paginator');
+        $receiving_breadcrumbs = $this->container->get('receiving_breadcrumbs');
 
 
         return $this->render('catalog.html.twig', array(
             'categories' => $category_view->getViewString($categories),
             'items' =>$items_view->getViewString($items),
+            'breadcrumbs' => $receiving_breadcrumbs->getViewString($current_category, $categories, ''),
         ));
     }
 

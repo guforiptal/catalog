@@ -56,7 +56,7 @@ class ItemsOnCategoryToView
 
     private function build_string_without_items()
     {
-        return "<h1>This catagory doesn't have any items yet</h1>";
+        return "<h2>This catagory doesn't have any items yet</h2>";
     }
 
 

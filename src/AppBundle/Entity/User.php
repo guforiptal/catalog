@@ -5,15 +5,12 @@
  * Date: 12.04.2017
  * Time: 17:03
  */
-
 namespace AppBundle\Entity;
-
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity()
@@ -28,24 +25,20 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     protected $plainPassword;
-
     public function __construct()
     {
         parent::__construct();
         $this->enabled = true;
     }
-
     public function getSalt()
     {
         return null;
     }
-
     public function setRoleUser()
     {
         $this->addRole("ROLE_USER");
@@ -53,37 +46,30 @@ class User extends BaseUser
             $this->addRole("ROLE_ADMIN");
         }
     }
-
     public function setUsername($username)
     {
         $this->username = $username;
         $this->usernameCanonical = $username;
-
         return $this;
     }
-
     public function setUsernameCanonical($usernameCanonical)
     {
         $this->usernameCanonical = $usernameCanonical;
         $this->username = $usernameCanonical;
-
         return $this;
     }
-
     public function setEmail($email)
     {
         $this->email = $email;
         $this->emailCanonical = $email;
         return $this;
     }
-
     public function setEmailCanonical($emailCanonical)
     {
         $this->emailCanonical = $emailCanonical;
         $this->email = $emailCanonical;
         return $this;
     }
-
     /**
      * Gets the last login time.
      *
@@ -96,29 +82,18 @@ class User extends BaseUser
         else
             return null;
     }
-
     /**
      * {@inheritdoc}
      */
     public function getRolesString()
     {
-        $roles = $this->roles;
-
-        foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
-        }
-
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
-        $unique = array_unique($roles);
+        $unique = $this->getRoles();
         $string = '';
-
         foreach ($unique as $role){
             $string .= $role . ' ';
         }
+        return $string;
     }
-
     /**
      * Gets the timestamp that the user requested a password reset.
      *
@@ -131,11 +106,9 @@ class User extends BaseUser
         else
             return null;
     }
-
     public function getGetters()
     {
         $array = array();
-
         array_push($array,'getId');
         array_push($array,'getUsername');
         array_push($array,'getPassword');
@@ -147,13 +120,9 @@ class User extends BaseUser
         array_push($array,'getLastLogin');
         array_push($array,'getPasswordRequestedAt');
         array_push($array,'getRolesString');
-
         return $array;
     }
-
-
     public function eraseCredentials()
     {
     }
-
 }
