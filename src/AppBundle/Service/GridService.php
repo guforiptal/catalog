@@ -46,12 +46,6 @@ class GridService
             ->setFirstResult($start)
             ->setMaxResults($limit);
 
-        /*$query = $this->em->createQuery(
-            'SELECT u
-    FROM AppBundle:User u
-    ORDER BY u.' . $this->caseCorrector($sidx) . ' ' . strtoupper($sord)
-        )->setFirstResult($start)->setMaxResults($limit);*/
-
         $count = $this->em->createQuery(
             'SELECT COUNT(u)
     FROM '.$this->bundle_name.' u'
@@ -71,29 +65,19 @@ class GridService
 
         $paginator = new Paginator($query, $fetchJoinCollection = true);
 
-        foreach ($paginator as $user) {
-            $s .= "<row id='" . $user->getId() . "'>";
-            $s .= "<cell>" . $user->getId() . "</cell>";
-            $s .= "<cell>" . $user->getUsername() . "</cell>";
-            $s .= "<cell>" . $user->getPassword() . "</cell>";
-            $s .= "<cell>" . $user->getEmail() . "</cell>";
-            $s .= "<cell>" . $user->getUsernameCanonical() . "</cell>";
-            $s .= "<cell>" . $user->getEmailCanonical() . "</cell>";
-            $s .= "<cell>" . $user->isEnabled() . "</cell>";
-            $s .= "<cell>" . $user->getSalt() . "</cell>";
-            if ($user->getLastLogin() != null) $s .= "<cell>" . $user->getLastLogin()->format('Y-m-d H:i:s') . "</cell>";
-            else $s .= "<cell>" . 'N/A' . "</cell>";
-            $s .= "<cell>" . $user->getConfirmationToken() . "</cell>";
-            if ($user->getPasswordRequestedAt() != null) $s .= "<cell>" . $user->getPasswordRequestedAt()->format('Y-m-d H:i:s') . "</cell>";
-            else $s .= "<cell>" . 'N/A' . "</cell>";
-            $roles = "";
-            foreach ($user->getRoles() as $str) {
-                $roles .= $str . ' ';
+        foreach ($paginator as $object) {
+            $s .= "<row id='" . $object->getId() . "'>";
+            $this->printArray($object->getGetters());
+            foreach ($object->getGetters() as $getter) {
+                if($object->$getter() != null)
+                    $s .= "<cell>" . $object->$getter() . "</cell>";
+                else
+                    $s .= "<cell>" . 'N/A' . "</cell>";
             }
-            $s .= "<cell>" . $roles . "</cell>";
             $s .= "</row>";
         }
         $s .= "</rows>";
+
         return $s;
     }
 
@@ -103,16 +87,13 @@ class GridService
         $column_name = $this->getColumnName();
         $value = $this->post[$column_name];
 
-        //file_put_contents("php://stdout", "\nDump:");
-        //$this->printArray(array_keys($_POST));
-
         $repository = $this->em->getRepository($this->bundle_name);
-        $user = $repository->findOneById($id);
+        $object = $repository->findOneById($id);
 
         $setter_name = 'set'.ucfirst($this->caseCorrector($column_name));
-        $user->$setter_name($value);
+        $object->$setter_name($value);
 
-        $this->em->persist($user);
+        $this->em->persist($object);
         $this->em->flush();
 
         return;
@@ -138,5 +119,15 @@ class GridService
                 return 'passwordRequestedAt';
         }
         return $str;
+    }
+
+    private function printArray($array)
+    {
+        foreach ($array as $key => $value) {
+            file_put_contents("php://stdout", "\n$key => $value");
+            if (is_array($value)) {
+                $this->printArray($value);
+            }
+        }
     }
 }

@@ -84,6 +84,73 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * Gets the last login time.
+     *
+     * @return string
+     */
+    public function getLastLogin()
+    {
+        if ($this->lastLogin != null)
+            return $this->lastLogin->format('Y-m-d H:i:s');
+        else
+            return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRolesString()
+    {
+        $roles = $this->roles;
+
+        foreach ($this->getGroups() as $group) {
+            $roles = array_merge($roles, $group->getRoles());
+        }
+
+        // we need to make sure to have at least one role
+        $roles[] = static::ROLE_DEFAULT;
+
+        $unique = array_unique($roles);
+        $string = '';
+
+        foreach ($unique as $role){
+            $string .= $role . ' ';
+        }
+    }
+
+    /**
+     * Gets the timestamp that the user requested a password reset.
+     *
+     * @return null|\string
+     */
+    public function getPasswordRequestedAt()
+    {
+        if ($this->passwordRequestedAt != null)
+            return $this->passwordRequestedAt->format('Y-m-d H:i:s');
+        else
+            return null;
+    }
+
+    public function getGetters()
+    {
+        $array = array();
+
+        array_push($array,'getId');
+        array_push($array,'getUsername');
+        array_push($array,'getPassword');
+        array_push($array,'getEmail');
+        array_push($array,'getUsernameCanonical');
+        array_push($array,'getEmailCanonical');
+        array_push($array,'isEnabled');
+        array_push($array,'getSalt');
+        array_push($array,'getLastLogin');
+        array_push($array,'getPasswordRequestedAt');
+        array_push($array,'getRolesString');
+
+        return $array;
+    }
+
 
     public function eraseCredentials()
     {

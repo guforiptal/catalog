@@ -80,8 +80,6 @@ class Item
      * Set name
      *
      * @param string $name
-     *
-     * @return Item
      */
     public function setName($name)
     {
@@ -102,8 +100,6 @@ class Item
      * Set category
      *
      * @param int $category
-     *
-     * @return Item
      */
 
     public function setCategory($category)
@@ -125,8 +121,6 @@ class Item
      * Set description
      *
      * @param string $description
-     *
-     * @return Item
      */
 
     public function setDescription($description)
@@ -148,8 +142,6 @@ class Item
      * Set image
      *
      * @param string $image
-     *
-     * @return Item
      */
 
     public function setImage($image)
@@ -171,8 +163,6 @@ class Item
      * Set sku
      *
      * @param int $sku
-     *
-     * @return Item
      */
 
     public function setSku($sku)
@@ -194,8 +184,6 @@ class Item
      * Set active
      *
      * @param boolean $active
-     *
-     * @return Item
      */
 
     public function setActive($active)
@@ -211,6 +199,21 @@ class Item
     public function getActive()
     {
         return $this->active;
+    }
+
+    public function getGetters()
+    {
+        $array = array();
+
+        array_push($array,'getId');
+        array_push($array,'getName');
+        array_push($array,'getActive');
+        array_push($array,'getDescription');
+        array_push($array,'getImage');
+        array_push($array,'getCategory');
+        array_push($array,'getSku');
+
+        return $array;
     }
 
 

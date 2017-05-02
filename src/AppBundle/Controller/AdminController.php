@@ -46,16 +46,6 @@ class AdminController extends Controller
         return new Response();
     }
 
-    private function printArray($array)
-    {
-        foreach ($array as $key => $value) {
-            file_put_contents("php://stdout", "\n$key => $value" . var_dump($_POST));
-            if (is_array($value)) {
-                $this->printArray($value);
-            }
-        }
-    }
-
     private function gridInit($bundle_name,$post)
     {
         $grid_service = $this->container->get('app.grid_service');

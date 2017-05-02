@@ -49,14 +49,10 @@ class Category
      * Set name
      *
      * @param string $name
-     *
-     * @return Category
      */
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -73,15 +69,11 @@ class Category
      * Set parent
      *
      * @param string $parent
-     *
-     * @return Category
      */
 
     public function setParent($parent)
     {
         $this->parent = $parent;
-
-        return $this;
     }
 
     /**
@@ -92,6 +84,17 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function getGetters()
+    {
+        $array = array();
+
+        array_push($array,'getId');
+        array_push($array,'getName');
+        array_push($array,'getParent');
+
+        return $array;
     }
 }
 
